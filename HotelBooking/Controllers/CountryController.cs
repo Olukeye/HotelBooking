@@ -44,7 +44,7 @@ namespace HotelBookings.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetOneCountry(int id)
+        public async Task<IActionResult> GetCountry(int id)
         {
             try
             {
@@ -64,20 +64,21 @@ namespace HotelBookings.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateCountry([FromBody] CreateCountryDTO createCountryDTO)
+        public async Task<IActionResult> CreateCountry([FromBody] CreateCountryDTO countryDTO)
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogInformation($"Invalid Post Action in {nameof(CreateCountry)}");
+                _logger.LogError($"Invalid Post Action in {nameof(CreateCountry)}");
                 return BadRequest(ModelState);
             }
             try
             {
-                var country = _mapper.Map<Country>(createCountryDTO);
+                var country = _mapper.Map<Country>(countryDTO);
                 await _unitOfWork.Countries.Insert(country);
                 await _unitOfWork.Save();
 
-                return CreatedAtRoute("GetCountry", new { id = country.Id });
+                return CreatedAtRoute("GetCountry", new { id = country.Id }, country);
+                //return CreatedAtAction("CreateCountry", country);
             }
             catch (Exception ex)
             {

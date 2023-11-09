@@ -11,23 +11,23 @@ namespace HotelBookings.DTO
         public string Name { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 50, ErrorMessage = "Hotel Name Too Long")]
+        [StringLength(maximumLength: 50, ErrorMessage = "City Name Too Long")]
         public string City { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 50, ErrorMessage = "Hotel Name Too Long")]
+        [StringLength(maximumLength: 50, ErrorMessage = "Title Name Too Long")]
         public string Title { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 50, ErrorMessage = "Hotel Name Too Long")]
+        [StringLength(maximumLength: 50, ErrorMessage = "Type Of Room Too Long")]
         public string Type { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 50, ErrorMessage = "Hotel Name Too Long")]
+        [StringLength(maximumLength: 50, ErrorMessage = "Address Too Long")]
         public string Address { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 50, ErrorMessage = "Hotel Name Too Long")]
+        [StringLength(maximumLength: 50, ErrorMessage = "Distance Detail Too Long")]
         public string Distance { get; set; }
 
 
@@ -35,7 +35,7 @@ namespace HotelBookings.DTO
         public decimal CheapestRate { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 50, ErrorMessage = "Hotel Name Too Long")]
+        [StringLength(maximumLength: 50, ErrorMessage = "Description Too Long")]
         public string Description { get; set; }
 
         [Required]

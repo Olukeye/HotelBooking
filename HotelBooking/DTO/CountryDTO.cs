@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HotelBookings.DTO
 {
-    public class CreateCountryDTO : CountryDTO
+    public class CreateCountryDTO 
     {
         [Required]
         [StringLength(maximumLength: 50, ErrorMessage = "Country Name Too Long")]
@@ -15,7 +15,7 @@ namespace HotelBookings.DTO
 
         public DateTime DateCreated { get; set; }
     }
-    public class CountryDTO
+    public class CountryDTO : CreateCountryDTO
     {
         public int Id { get; set; }
         public IList<HotelDTO> Hotels { get; set; }
