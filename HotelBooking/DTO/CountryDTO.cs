@@ -15,6 +15,12 @@ namespace HotelBookings.DTO
 
         public DateTime DateCreated { get; set; }
     }
+
+    public class UpdateCountryDTO: CreateCountryDTO
+    {
+
+    }
+
     public class CountryDTO : CreateCountryDTO
     {
         public int Id { get; set; }
