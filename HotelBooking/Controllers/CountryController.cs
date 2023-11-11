@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using HotelBookings.DTO;
+using HotelBooking.DTO;
 using HotelBooking.IRepository;
-using HotelBookings.Model;
+using HotelBooking.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBookings.Controllers
@@ -20,6 +20,7 @@ namespace HotelBookings.Controllers
             _mapper = mapper;
             _logger = logger;
         }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

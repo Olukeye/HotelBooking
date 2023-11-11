@@ -1,4 +1,4 @@
-﻿using HotelBookings.Model;
+﻿using HotelBooking.Model;
 
 namespace HotelBooking.IRepository
 {

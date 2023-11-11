@@ -1,4 +1,4 @@
-﻿namespace HotelBookings.Model
+﻿namespace HotelBooking.Model
 {
     public class Country
     {

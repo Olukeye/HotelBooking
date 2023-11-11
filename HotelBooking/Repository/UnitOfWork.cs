@@ -1,6 +1,6 @@
-﻿using HotelBookings.Model;
+﻿using HotelBooking.Model;
 using HotelBooking.IRepository;
-using HotelBookings.Data;
+using HotelBooking.Data;
 
 namespace HotelBooking.Repository
 {

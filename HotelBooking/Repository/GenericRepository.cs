@@ -1,8 +1,8 @@
-﻿using HotelBookings.Data;
-using HotelBooking.IRepository;
+﻿using HotelBooking.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using HotelBooking.Data;
 
 namespace HotelBooking.Repository
 {
@@ -10,12 +10,14 @@ namespace HotelBooking.Repository
     {
         private readonly DatabaseContext _context;
         private readonly DbSet<T> _dbSet;
+        private DatabaseContext context;
 
         public GenericRepository(DatabaseContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();
         }
+
         public async Task Delete(int id)
         {
             var item = await _dbSet.FindAsync(id);

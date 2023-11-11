@@ -1,8 +1,7 @@
-﻿using HotelBookings.Model;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HotelBookings.DTO
+namespace HotelBooking.DTO
 {
     public class CreateRoomDTO
     {
