@@ -1,8 +1,11 @@
-﻿using HotelBookings.Data;
-using HotelBooking.IRepository;
+﻿using HotelBooking.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using HotelBooking.Data;
+using HotelBooking.Model;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using X.PagedList;
 
 namespace HotelBooking.Repository
 {
@@ -16,6 +19,7 @@ namespace HotelBooking.Repository
             _context = context;
             _dbSet = context.Set<T>();
         }
+
         public async Task Delete(int id)
         {
             var item = await _dbSet.FindAsync(id);
@@ -48,7 +52,6 @@ namespace HotelBooking.Repository
 
         public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = default, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = default, List<string> includes = null)
         {
-            //note that "expression" is for getting an item by its specification either by name , id or shortName etc
             IQueryable<T> query = _dbSet;
 
             if (expression != null)
@@ -67,6 +70,21 @@ namespace HotelBooking.Repository
                 query = orderBy(query);
             }
             return await query.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IPagedList<T>> Pagging( PaggingRequest paggingRequest, List<string> includes = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (includes != null)
+            {
+                foreach (var includePropertry in includes)
+                {
+                    query = query.Include(includePropertry);
+                }
+            }
+
+            return await query.AsNoTracking().ToPagedListAsync(paggingRequest.PageNumber, paggingRequest.PageSize);
         }
 
         public async Task Insert(T item)

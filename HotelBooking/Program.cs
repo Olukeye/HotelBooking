@@ -1,16 +1,19 @@
 
 using HotelBooking.IRepository;
 using HotelBooking.Repository;
-using HotelBookings.Configuration;
-using HotelBookings.Data;
+using HotelBooking.Utils_OR_ServiceExtensions;
+using HotelBooking.Configuration;
+using HotelBooking.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Events;
-
-
+using HotelBooking.AuthServices;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
+
 
 Log.Logger = new LoggerConfiguration()
     // Logs are written in JSON
@@ -46,20 +49,49 @@ finally
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAuth, Auth>();
+builder.Services.AddAutoMapper(typeof(MapperInitilizer)); //Setup for DTO's
 builder.Services.AddDbContext<DatabaseContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"));
 });
+
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(config);
+
 builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddSwaggerGen(c =>
 {
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
+        Description =  @"JWT Authorization header using Bearer scheme. 
+          Enter 'Bearer' [space] and then your token in the input below.
+          Example: 'Bearer 0bchyie8gmvy9876534567igx6f6s56qr81hvvbllsxz'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            },
+            Scheme = "0auth2",
+            Name = "Bearer",
+            In = ParameterLocation.Header
+        },
+            new List<string>()
+        }
+    });
+    
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListings", Version = "v1" });
 });
-
-
-//var connectionString = builder.Configuration;
-builder.Services.AddAutoMapper(typeof(MapperInitilizer)); //Setup for DTO's
-
-
 
 builder.Services.AddCors(options =>
 {

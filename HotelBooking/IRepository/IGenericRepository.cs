@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using HotelBooking.Model;
+using System.Linq.Expressions;
+using X.PagedList;
 
 namespace HotelBooking.IRepository
 {
@@ -8,6 +10,11 @@ namespace HotelBooking.IRepository
             Expression<Func<T, bool>> expression = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             List<string> includes = null);
+
+        Task<IPagedList<T>> Pagging(
+            PaggingRequest paggingRequest,
+            List<string> includes = null);
+
         Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null);
         Task Insert(T item);
         Task InsertRamge(IEnumerable<T> item);

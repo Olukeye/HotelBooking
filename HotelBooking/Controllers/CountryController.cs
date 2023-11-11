@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using HotelBookings.DTO;
+using HotelBooking.DTO;
 using HotelBooking.IRepository;
-using HotelBookings.Model;
+using HotelBooking.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBookings.Controllers
@@ -20,15 +20,16 @@ namespace HotelBookings.Controllers
             _mapper = mapper;
             _logger = logger;
         }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCountries()
+        public async Task<IActionResult> GetCountries([FromQuery] PaggingRequest paggingRequest)
         {
             try
             {
-                var countries = await _unitOfWork.Countries.GetAll();
+                var countries = await _unitOfWork.Countries.Pagging(paggingRequest);
                 var result = _mapper.Map<IList<CountryDTO>>(countries);
                 return Ok(countries);
             }
