@@ -2,10 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using HotelBooking.Data;
-using HotelBooking.Model;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using X.PagedList;
 
 namespace HotelBooking.Repository
 {
@@ -13,6 +9,7 @@ namespace HotelBooking.Repository
     {
         private readonly DatabaseContext _context;
         private readonly DbSet<T> _dbSet;
+        private DatabaseContext context;
 
         public GenericRepository(DatabaseContext context)
         {
