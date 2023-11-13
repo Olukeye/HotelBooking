@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelBooking.Migrations
 {
-    public partial class AddIdentityandEnity : Migration
+    public partial class AddEntities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -206,7 +206,7 @@ namespace HotelBooking.Migrations
                 name: "Rooms",
                 columns: table => new
                 {
-                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoomNumber = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -218,7 +218,7 @@ namespace HotelBooking.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rooms", x => x.ID);
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Rooms_Hotels_HotelId",
                         column: x => x.HotelId,
@@ -230,12 +230,12 @@ namespace HotelBooking.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2f3cd9c4-0b48-488b-b8df-1ba3d85ca6f3", "964a0b05-947f-4d05-bcbe-6604d5705c63", "Admin", "ADMIN" });
+                values: new object[] { "28e31c52-c27b-4a70-8a03-17b3a9556256", "cd714f34-5ff0-4343-bf91-f667dc2fc06f", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "990382ec-fbd4-4dfb-9692-6966fcd48196", "64920a3c-77b4-4125-bdc9-be5127faba10", "User", "USER" });
+                values: new object[] { "6fb0c4d9-d52c-45a2-b87d-a00c9d26698f", "3caee9e0-e7d5-4efa-ae55-99a39ed36456", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

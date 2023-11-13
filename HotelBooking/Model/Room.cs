@@ -4,7 +4,7 @@ namespace HotelBooking.Model
 {
     public class Room
     {
-        public string ID { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public int RoomNumber { get; set; }
         public decimal Price { get; set; }

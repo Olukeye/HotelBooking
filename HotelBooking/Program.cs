@@ -113,6 +113,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.ExceptionHandlerConfiguration();
+
+
 app.UseSwagger();
 
 app.UseRouting();

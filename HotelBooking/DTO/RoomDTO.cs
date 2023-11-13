@@ -35,7 +35,7 @@ namespace HotelBooking.DTO
 
     public class RoomDTO : CreateRoomDTO
     {
-        public string ID { get; set; }
+        public string Id { get; set; }
 
     }
 }

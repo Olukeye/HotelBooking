@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231111221423_AddIdentityandEnity")]
-    partial class AddIdentityandEnity
+    [Migration("20231115001845_AddEntities")]
+    partial class AddEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,7 +186,7 @@ namespace HotelBooking.Migrations
 
             modelBuilder.Entity("HotelBooking.Model.Room", b =>
                 {
-                    b.Property<string>("ID")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("Available")
@@ -215,7 +215,7 @@ namespace HotelBooking.Migrations
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("HotelId");
 
@@ -251,15 +251,15 @@ namespace HotelBooking.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "990382ec-fbd4-4dfb-9692-6966fcd48196",
-                            ConcurrencyStamp = "64920a3c-77b4-4125-bdc9-be5127faba10",
+                            Id = "28e31c52-c27b-4a70-8a03-17b3a9556256",
+                            ConcurrencyStamp = "cd714f34-5ff0-4343-bf91-f667dc2fc06f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "2f3cd9c4-0b48-488b-b8df-1ba3d85ca6f3",
-                            ConcurrencyStamp = "964a0b05-947f-4d05-bcbe-6604d5705c63",
+                            Id = "6fb0c4d9-d52c-45a2-b87d-a00c9d26698f",
+                            ConcurrencyStamp = "3caee9e0-e7d5-4efa-ae55-99a39ed36456",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

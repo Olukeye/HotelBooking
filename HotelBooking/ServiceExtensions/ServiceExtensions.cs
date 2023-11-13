@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http.Connections.Features;
+using HotelBooking.ResponsHanlder;
+using Serilog;
 
 namespace HotelBooking.Utils_OR_ServiceExtensions
 {
@@ -42,6 +45,30 @@ namespace HotelBooking.Utils_OR_ServiceExtensions
                     ValidIssuer = jwtSettings.GetSection("Issuer").Value,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("key")),
                 };
+            });
+        }
+
+        //
+        public static void ExceptionHandlerConfiguration(this IApplicationBuilder app)
+        {
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    context.Response.ContentType = "application/Json";
+
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    if (contextFeature != null)
+                    {
+                        Log.Error($"Something Went Wrong In {contextFeature.Error}");
+                        await context.Response.WriteAsync(new ResponseStatus()
+                        {
+                            StatusCode = context.Response.StatusCode,
+                            Message = "Internal Server Error..."
+                        }.ToString());
+                    }
+                });
             });
         }
 
