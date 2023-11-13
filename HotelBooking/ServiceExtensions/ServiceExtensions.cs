@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
+
 namespace HotelBooking.Utils_OR_ServiceExtensions
 {
     public static class ServiceExtensions
