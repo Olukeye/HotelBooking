@@ -47,6 +47,10 @@ namespace HotelBooking.DTO
 
         public DateTime DateCreated { get; set; }
     }
+    public class UpdateHotelDTO : CreateHotelDTO
+    {
+
+    }
 
     public class HotelDTO : CreateHotelDTO
     {

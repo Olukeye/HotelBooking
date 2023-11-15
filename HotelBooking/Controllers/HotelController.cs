@@ -2,6 +2,7 @@
 using HotelBooking.DTO;
 using HotelBooking.IRepository;
 using HotelBooking.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,11 +49,12 @@ namespace HotelBooking.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateHotel([FromBody] CreateHotelDTO hotelDTO)
+        public async Task<IActionResult> CreateHotel([FromBody] CreateHotelDTO createlDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -60,11 +62,65 @@ namespace HotelBooking.Controllers
                 return BadRequest(ModelState);
             }
 
-            var hotel = _mapper.Map<Hotel>(hotelDTO);
+            var hotel = _mapper.Map<Hotel>(createlDTO);
             await _unitOfWork.Hotels.Insert(hotel);
 
             await _unitOfWork.Save();
             return CreatedAtRoute("GetHotel", new { id = hotel.Id }, hotel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateHotel(int id, [FromBody] UpdateHotelDTO updateDTO)
+        {
+
+            if (!ModelState.IsValid && id < 1)
+            {
+                _logger.LogError($"Invalid Post Action in {nameof(CreateHotel)}");
+                return BadRequest(ModelState);
+            }
+
+            var hotel = await _unitOfWork.Hotels.Get(q => q.Id == id);
+            if(hotel == null)
+            {
+                _logger.LogError($"Invalid action in {nameof(UpdateHotel)}");
+                return BadRequest("Wrong Data Submitted");
+            }
+
+            var result = _mapper.Map(updateDTO, hotel);
+            _unitOfWork.Hotels.Update(result);
+            await _unitOfWork.Save();
+
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteHotel(int id)
+        {
+            if (!ModelState.IsValid && id < 1)
+            {
+                _logger.LogError($"Invalid Post Action in {nameof(DeleteHotel)}");
+                return BadRequest(ModelState);
+            }
+
+            var hotel = await _unitOfWork.Hotels.Get(q => q.Id == id);
+            if (hotel == null)
+            {
+                _logger.LogError($"Invalid action in {nameof(UpdateHotel)}");
+                return BadRequest("Wrong Data Submitted");
+            }
+
+            await _unitOfWork.Hotels.Delete(id);
+            await _unitOfWork.Save();
+
+            return NoContent();
         }
     }
 }

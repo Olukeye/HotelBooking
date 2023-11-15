@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231115001845_AddEntities")]
+    [Migration("20231115204347_AddEntities")]
     partial class AddEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -186,8 +186,11 @@ namespace HotelBooking.Migrations
 
             modelBuilder.Entity("HotelBooking.Model.Room", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<bool>("Available")
                         .HasColumnType("bit");
@@ -251,15 +254,15 @@ namespace HotelBooking.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "28e31c52-c27b-4a70-8a03-17b3a9556256",
-                            ConcurrencyStamp = "cd714f34-5ff0-4343-bf91-f667dc2fc06f",
+                            Id = "35342a39-a352-46df-9d85-c2aaf3196da1",
+                            ConcurrencyStamp = "b06c971c-8248-4823-a129-da70e41d9ae4",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "6fb0c4d9-d52c-45a2-b87d-a00c9d26698f",
-                            ConcurrencyStamp = "3caee9e0-e7d5-4efa-ae55-99a39ed36456",
+                            Id = "b9b5e173-9aa4-4343-bc63-e8e6edf0b245",
+                            ConcurrencyStamp = "5eea1727-868c-4b8b-a0e6-f54c76b56b0b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

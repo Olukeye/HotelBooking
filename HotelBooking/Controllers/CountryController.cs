@@ -2,6 +2,7 @@
 using HotelBooking.DTO;
 using HotelBooking.IRepository;
 using HotelBooking.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBookings.Controllers
@@ -48,6 +49,7 @@ namespace HotelBookings.Controllers
            
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -69,6 +71,7 @@ namespace HotelBookings.Controllers
            
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}", Name = "UpdateCountry")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -97,6 +100,7 @@ namespace HotelBookings.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}", Name = "DeleteCountry")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

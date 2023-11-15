@@ -33,6 +33,11 @@ namespace HotelBooking.DTO
 
     }
 
+   public class UpdateRoomDTO: CreateRoomDTO
+    {
+
+    }
+
     public class RoomDTO : CreateRoomDTO
     {
         public string Id { get; set; }
