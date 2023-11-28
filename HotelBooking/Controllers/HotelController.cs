@@ -49,7 +49,6 @@ namespace HotelBooking.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -69,7 +68,6 @@ namespace HotelBooking.Controllers
             return CreatedAtRoute("GetHotel", new { id = hotel.Id }, hotel);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -97,7 +95,6 @@ namespace HotelBooking.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

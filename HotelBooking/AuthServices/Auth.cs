@@ -16,8 +16,8 @@ namespace HotelBooking.AuthServices
 
         public Auth(UserManager<ApiUser> userManager, IConfiguration configuration )
         {
-            _configuration = configuration;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         public async Task<string> CreateToken()
@@ -31,9 +31,9 @@ namespace HotelBooking.AuthServices
 
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
-            var jwtSettings = _configuration.GetSection("jwt");
-            var expiration = DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings.GetSection("ExpiredTime").Value));
-
+            var jwtSettings = _configuration.GetSection("Jwt");
+            var expiration = DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings.GetSection("ExpiredTime").Value));
+             
             var token = new JwtSecurityToken(
                 issuer: jwtSettings.GetSection("ValidIssuer").Value,
                 claims: claims,
@@ -59,7 +59,6 @@ namespace HotelBooking.AuthServices
             }
             return claims;
         }
-
 
         private SigningCredentials GetSigningCredentials()
         {

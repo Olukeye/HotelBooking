@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelBooking.DTO;
+using HotelBooking.EmailService;
 using HotelBooking.IRepository;
 using HotelBooking.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -14,12 +15,14 @@ namespace HotelBookings.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger<CountryController> _logger; //Note: If you don't add <CountryController> to the Ilogger, you may have issues whilse testing
+        private readonly IEmailSender _emailSender;
 
-        public CountryController(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CountryController> logger)
+        public CountryController(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CountryController> logger, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -31,10 +34,12 @@ namespace HotelBookings.Controllers
 
             var countries = await _unitOfWork.Countries.Pagging(paggingRequest);
             var result = _mapper.Map<IList<CountryDTO>>(countries);
+
             return Ok(result);
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id:int}", Name = "GetCountry")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -49,7 +54,6 @@ namespace HotelBookings.Controllers
            
         }
 
-        [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelBooking.Migrations
 {
-    public partial class AddEntities : Migration
+    public partial class EntityIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -231,12 +231,12 @@ namespace HotelBooking.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "35342a39-a352-46df-9d85-c2aaf3196da1", "b06c971c-8248-4823-a129-da70e41d9ae4", "User", "USER" });
+                values: new object[] { "0b44f02e-4cf0-4662-ad3e-0d570614895e", "17eb1b05-9622-405e-9c79-f7359ec52917", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "b9b5e173-9aa4-4343-bc63-e8e6edf0b245", "5eea1727-868c-4b8b-a0e6-f54c76b56b0b", "Admin", "ADMIN" });
+                values: new object[] { "9c84311f-9557-466e-ae43-fe9699fcb318", "36ad2031-57bf-4ca5-811e-c317b2e73ebd", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

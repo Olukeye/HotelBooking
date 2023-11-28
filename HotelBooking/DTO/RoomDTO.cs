@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBooking.DTO
 {
     public class CreateRoomDTO
     {
         [Required]
-        [StringLength(maximumLength: 50, ErrorMessage = "Country Name Too Long")]
+        [StringLength(maximumLength: 50, ErrorMessage = "Room Name Too Long")]
         public string Name { get; set; }
 
         [Required]
@@ -20,7 +19,7 @@ namespace HotelBooking.DTO
         public int MaxGuestPerRoom { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 200, ErrorMessage = "Description Name Too Long")]
+        [StringLength(maximumLength: 200, ErrorMessage = "Room Description Name Too Long")]
         public string Description { get; set; }
 
         [Required]
@@ -33,14 +32,15 @@ namespace HotelBooking.DTO
 
     }
 
-   public class UpdateRoomDTO: CreateRoomDTO
+    public class RoomDTO : CreateRoomDTO
     {
+        public int Id { get; set; }
+        public HotelDTO Hotel { get; set; }
 
     }
 
-    public class RoomDTO : CreateRoomDTO
+    public class UpdateRoomDTO : CreateRoomDTO
     {
-        public string Id { get; set; }
 
     }
 }

@@ -11,7 +11,9 @@ namespace HotelBooking.Model
         public string Type { get; set; }
         public string Address { get; set; }
         public string Distance { get; set; }
+
         public virtual IList<Room> Rooms { get; set; }
+
         public decimal CheapestRate { get; set; }
         public string Description { get; set; }
         public double Rating { get; set; }

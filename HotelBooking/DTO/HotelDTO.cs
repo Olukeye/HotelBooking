@@ -29,7 +29,6 @@ namespace HotelBooking.DTO
         [StringLength(maximumLength: 50, ErrorMessage = "Distance Detail Too Long")]
         public string Distance { get; set; }
 
-
         [Required]
         public decimal CheapestRate { get; set; }
 
@@ -56,7 +55,6 @@ namespace HotelBooking.DTO
     {
         public int Id { get; set; }
         public CountryDTO Country { get; set; }
-
-        public RoomDTO Room { get; set; }
+        public virtual IList<RoomDTO> Rooms { get; set; }
     }
 }

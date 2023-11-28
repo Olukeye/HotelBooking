@@ -17,8 +17,8 @@ namespace HotelBooking.Configuration
             CreateMap<Hotel, HotelDTO>().ReverseMap();
             CreateMap<Hotel, CreateHotelDTO>().ReverseMap();
 
+            CreateMap<Room, RoomDTO>().ReverseMap();
             CreateMap<Room, CreateRoomDTO>().ReverseMap();
-
         }
     }
 }

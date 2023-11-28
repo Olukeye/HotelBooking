@@ -2,8 +2,6 @@
 using HotelBooking.DTO;
 using HotelBooking.IRepository;
 using HotelBooking.Model;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBooking.Controllers
@@ -30,7 +28,7 @@ namespace HotelBooking.Controllers
         public async Task<IActionResult> GetRooms([FromQuery] PaggingRequest paggingRequest)
         {
             var rooms = await _unitOfWork.Rooms.Pagging(paggingRequest);
-            var result = _mapper.Map<IList<RoomDTO>>(rooms);
+            var result = _mapper.Map<IList<Room>>(rooms);
             return Ok(result);
         }
 
@@ -40,12 +38,12 @@ namespace HotelBooking.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetRoom(int id)
         {
-            var room = await _unitOfWork.Rooms.Get(q => q.Id == id, new List<string> { "Room" });
+            var room = await _unitOfWork.Rooms.Get(q => q.Id == id);
             var result = _mapper.Map<RoomDTO>(room);
+
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -65,7 +63,6 @@ namespace HotelBooking.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}", Name = "UpdateRoom")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -93,7 +90,6 @@ namespace HotelBooking.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}", Name = "DeleteRoom")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
